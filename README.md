@@ -40,7 +40,7 @@ Original paper: [YOLO9000: Better, Faster, Stronger](https://arxiv.org/abs/1612.
 - The YOLO architecture is picturized in 'yolo.png' file.
 
 
-## Quick Start
+### Quick Start
 
 (1) Download Darknet model cfg and weights from the [official YOLO website](http://pjreddie.com/darknet/yolo/).
 
@@ -51,19 +51,22 @@ Original paper: [YOLO9000: Better, Faster, Stronger](https://arxiv.org/abs/1612.
 (3) Execute the 'train-model.py' to download the trained model. 
 
 
-(4) ##Class score
+(4) ###Class score
+
     * Now, for each box (of each cell) we will compute the following element-wise product and extract a probability that the box contains a certain class.  
      The class score is $score_{c,i} = p_{c} \times c_{i}$: the probability that there is an object $p_{c}$ times the probability that the object is a certain class          $c_{i}$.
      
      
-(5) ## Visualizing classes
+(5) ### Visualizing classes
+
     * Here's one way to visualize what YOLO is predicting on an image:
     * For each of the 19x19 grid cells, find the maximum of the probability scores (taking a max across the 80 classes, one maximum for each of the 3 anchor boxes).
     * Color that grid cell according to what object that grid cell considers the most likely.
     * **Note that this visualization isn't a core part of the YOLO algorithm itself for making predictions; it's just a nice way of visualizing an intermediate result of       the algorithm. **
     
     
-(6) ## Filtering with a threshold on class scores
+(6) ### Filtering with a threshold on class scores
+
      * You are going to first apply a filter by thresholding. You would like to get rid of any box for which the class "score" is less than a chosen threshold. 
      * The model gives a total of 19x19x3x85 numbers, with each box described by 85 numbers. It is convenient to rearrange the (19,19,3,85) (or (19,19,255)) dimensional        tensor into the following variables:  
         - `box_confidence`: tensor of shape $(19 \times 19, 3, 1)$ containing $p_c$ (confidence probability that there's some object) for each of the 3 boxes predicted              in each of the 19x19 cells.
@@ -71,7 +74,8 @@ Original paper: [YOLO9000: Better, Faster, Stronger](https://arxiv.org/abs/1612.
         - `box_class_probs`: tensor of shape $(19 \times 19, 3, 80)$ containing the "class probabilities" $(c_1, c_2, ... c_{80})$ for each of the 80 classes for each of            the 3 boxes per cell.
         
         
-(7) ## Non-Max suppression
+(7) ### Non-Max suppression
+
     * Now we have boxes for which the model had assigned a high probability, but this is still too many boxes. we'd like to reduce the                 algorithm's output       to a much smaller number of detected objects.  
     * To do so, we'll use **non-max suppression**. Specifically, we'll use **"Intersection over Union(IoU)"**. If you are not familier with IoU, google it.
 
@@ -79,7 +83,7 @@ Original paper: [YOLO9000: Better, Faster, Stronger](https://arxiv.org/abs/1612.
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
-#### Summary for YOLO:
+### Summary for YOLO:
 - Input image (416, 416, 3)
 - The input image goes through a CNN, resulting in a (19,19,3,85) dimensional output. 
 - After flattening the last two dimensions, the output is a volume of shape (19, 19, 255):
@@ -95,7 +99,7 @@ Original paper: [YOLO9000: Better, Faster, Stronger](https://arxiv.org/abs/1612.
 
 ------------------------------------------------------------------------------
 
-#### Results- 
+### Results- 
     
 ![image](https://user-images.githubusercontent.com/73088379/132945948-ac9a2b5e-347d-436d-8ffe-9807c71c4f3e.png)
 
