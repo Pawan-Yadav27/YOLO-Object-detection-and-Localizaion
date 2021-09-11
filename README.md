@@ -43,16 +43,25 @@ Original paper: [YOLO9000: Better, Faster, Stronger](https://arxiv.org/abs/1612.
 ## Quick Start
 
 (1) Download Darknet model cfg and weights from the [official YOLO website](http://pjreddie.com/darknet/yolo/).
+
+
 (2) Convert the Darknet YOLO_v2 model to a Keras model, or can use converted keras model in root directory.
+
+
 (3) Execute the 'train-model.py' to download the trained model. 
+
+
 (4) ##Class score
     * Now, for each box (of each cell) we will compute the following element-wise product and extract a probability that the box contains a certain class.  
      The class score is $score_{c,i} = p_{c} \times c_{i}$: the probability that there is an object $p_{c}$ times the probability that the object is a certain class          $c_{i}$.
+     
+     
 (5) ## Visualizing classes
     * Here's one way to visualize what YOLO is predicting on an image:
     * For each of the 19x19 grid cells, find the maximum of the probability scores (taking a max across the 80 classes, one maximum for each of the 3 anchor boxes).
     * Color that grid cell according to what object that grid cell considers the most likely.
     * **Note that this visualization isn't a core part of the YOLO algorithm itself for making predictions; it's just a nice way of visualizing an intermediate result of       the algorithm. **
+    
     
 (6) ## Filtering with a threshold on class scores
      * You are going to first apply a filter by thresholding. You would like to get rid of any box for which the class "score" is less than a chosen threshold. 
@@ -60,6 +69,8 @@ Original paper: [YOLO9000: Better, Faster, Stronger](https://arxiv.org/abs/1612.
         - `box_confidence`: tensor of shape $(19 \times 19, 3, 1)$ containing $p_c$ (confidence probability that there's some object) for each of the 3 boxes predicted              in each of the 19x19 cells.
         - `boxes`: tensor of shape $(19 \times 19, 3, 4)$ containing the midpoint and dimensions $(b_x, b_y, b_h, b_w)$ for each of the 3 boxes in each cell.
         - `box_class_probs`: tensor of shape $(19 \times 19, 3, 80)$ containing the "class probabilities" $(c_1, c_2, ... c_{80})$ for each of the 80 classes for each of            the 3 boxes per cell.
+        
+        
 (7) ## Non-Max suppression
     * Now we have boxes for which the model had assigned a high probability, but this is still too many boxes. we'd like to reduce the                 algorithm's output       to a much smaller number of detected objects.  
     * To do so, we'll use **non-max suppression**. Specifically, we'll use **"Intersection over Union(IoU)"**. If you are not familier with IoU, google it.
