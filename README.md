@@ -53,22 +53,22 @@ Original paper: [YOLO9000: Better, Faster, Stronger](https://arxiv.org/abs/1612.
 
 (4) Class score
 
-   (A) Now, for each box (of each cell) we will compute the following element-wise product and extract a probability that the box contains a certain class.  
-   (B) The class score is score_{c,i} = p_c * c_i: the probability that there is an object p_c times the probability that the object is a certain class c_i.
+     (A) Now, for each box (of each cell) we will compute the following element-wise product and extract a probability that the box contains a certain class.  
+     (B) The class score is score_{c,i} = p_c * c_i: the probability that there is an object p_c times the probability that the object is a certain class c_i.
      
      
 (5) Visualizing classes
 
-   (A) Here's one way to visualize what YOLO is predicting on an image:
-   (B) For each of the 19x19 grid cells, find the maximum of the probability scores (taking a max across the 80 classes, one maximum for each of the 3 anchor boxes).
-   (C) Color that grid cell according to what object that grid cell considers the most likely.
-   (D) **Note that this visualization isn't a core part of the YOLO algorithm itself for making predictions; it's just a nice way of visualizing an intermediate result of the algorithm.**
+     (A) Here's one way to visualize what YOLO is predicting on an image:
+     (B) For each of the 19x19 grid cells, find the maximum of the probability scores (taking a max across the 80 classes, one maximum for each of the 3 anchor boxes).
+     (C) Color that grid cell according to what object that grid cell considers the most likely.
+     (D) **Note that this visualization isn't a core part of the YOLO algorithm itself for making predictions; it's just a nice way of visualizing an intermediate result of the algorithm.**
     
     
 (6) Filtering with a threshold on class scores
 
-  (A) You are going to first apply a filter by thresholding. You would like to get rid of any box for which the class "score" is less than a chosen threshold. 
-  (B) The model gives a total of 19x19x3x85 numbers, with each box described by 85 numbers. It is convenient to rearrange the (19,19,3,85) (or (19,19,255)) dimensional tensor into the following variables:  
+    (A) You are going to first apply a filter by thresholding. You would like to get rid of any box for which the class "score" is less than a chosen threshold. 
+    (B) The model gives a total of 19x19x3x85 numbers, with each box described by 85 numbers. It is convenient to rearrange the (19,19,3,85) (or (19,19,255)) dimensional tensor into the following variables:  
         (i) `box_confidence`: tensor of shape (19 * 19, 3, 1) containing p_c (confidence probability that there's some object) for each of the 3 boxes predicted in each of the 19x19 cells.
         (ii) `boxes`: tensor of shape (19 * 19, 3, 4) containing the midpoint and dimensions (b_x, b_y, b_h, b_w) for each of the 3 boxes in each cell.
         (iii) `box_class_probs`: tensor of shape (19 * 19, 3, 80) containing the "class probabilities" (c_1, c_2, ... c_{80}) for each of the 80 classes for each of the 3 boxes per cell.
@@ -76,8 +76,8 @@ Original paper: [YOLO9000: Better, Faster, Stronger](https://arxiv.org/abs/1612.
         
 (7) Non-Max suppression
 
-   (A) Now we have boxes for which the model had assigned a high probability, but this is still too many boxes. we'd like to reduce the algorithm's output to a much smaller number of detected objects.  
-   (B) To do so, we'll use **non-max suppression**. Specifically, we'll use **"Intersection over Union(IoU)"**. If you are not familier with IoU, google it.
+    (A) Now we have boxes for which the model had assigned a high probability, but this is still too many boxes. we'd like to reduce the algorithm's output to a much smaller number of detected objects.  
+    (B) To do so, we'll use **non-max suppression**. Specifically, we'll use **"Intersection over Union(IoU)"**. If you are not familier with IoU, google it.
 
 </div>
 
